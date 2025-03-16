@@ -1,0 +1,42 @@
+@startuml
+title WarmHouse Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "User", "A user of the warmhouse system")
+Person(admin, "Administrator", "An administrator managing the system")
+System(WarmHouseSystem, "WarmHouse System", "System managing warmhouses")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(ApiGateway, "API Gateway", "Handles API requests")
+  Container(DeviceService, "Device service", "Manages devices")
+  Container(DeviceDB, "Device database", "Stores devices")
+  Container(TelemetryDB, "Telemetry database", "Stores telemetry")
+  Container(UserService, "User service", "Manages users")
+  Container(UserDB, "User database", "Stores users")
+  Container(Kafka, "Kafka", "Message broker")
+  Container(LoggingService, "Logging service", "Manages logs")
+  Container(LogDB, "Log database", "Stores logs")
+}
+
+System_Ext(device, "Device")
+
+Rel(user, ApiGateway, "Uses the system")
+Rel(admin, ApiGateway,"Manages the system")
+Rel(DeviceService, DeviceDB, "Reads/Writes user data")
+Rel(DeviceService, TelemetryDB, "Reads/Writes telemetry")
+Rel(UserService, UserDB, "Reads/Writes user data")
+Rel(ApiGateway, Kafka, "Request data")
+Rel(Kafka, ApiGateway, "Provide data")
+Rel(Kafka, DeviceService, "Subscribe to device updates")
+Rel(DeviceService, Kafka, "Provide device data")
+Rel(Kafka, UserService, "Subscribe to user updates")
+Rel(UserService, Kafka, "Provide user data")
+Rel(DeviceService, device, "Control device")
+Rel(device, DeviceService, "Device data")
+Rel(Kafka, LoggingService, "Subscribe to log updates")
+Rel(LoggingService, Kafka, "Provide logs")
+Rel(LoggingService, LogDB, "Reads/Writes logs")
+@enduml

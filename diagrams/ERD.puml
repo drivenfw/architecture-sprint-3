@@ -1,0 +1,44 @@
+@startuml
+
+entity "User" as e01 {
+  *id : number <<generated>>
+  --
+  *name : text
+  *email : text
+}
+
+entity "House" as e02 {
+  *id : number <<generated>>
+  --
+  *name text
+  *description text
+  *user_id : number <<FK>>
+}
+
+entity "DeviceType" as e03 {
+  *id : number <<generated>>
+  --
+  *type text
+}
+
+entity "Device" as e04 {
+  *id : number <<generated>>
+  --
+  *serial_number text
+  *description text
+  *type_id : number <<FK>>
+  *house_id : number <<FK>>
+}
+
+entity "TelemetryData" as e05 {
+  *id : number <<generated>>
+  --
+  *device_id : number <<FK>>
+  *data text
+}
+
+e01 ||..|{ e02
+e02 ||..|{ e04
+e04 ||..|| e03
+e04 ||..|{ e05
+@enduml
