@@ -10,35 +10,54 @@ entity "User" as e01 {
 entity "House" as e02 {
   *id : number <<generated>>
   --
-  *name text
-  *description text
+  *name : text
+  *description : text
   *user_id : number <<FK>>
 }
 
-entity "DeviceType" as e03 {
+entity "ModuleType" as e03 {
   *id : number <<generated>>
   --
-  *type text
+  *name : string
 }
 
-entity "Device" as e04 {
+entity "Module" as e04 {
   *id : number <<generated>>
   --
-  *serial_number text
-  *description text
+  *description : text
   *type_id : number <<FK>>
   *house_id : number <<FK>>
 }
 
-entity "TelemetryData" as e05 {
+entity "DeviceType" as e05 {
+  *id : number <<generated>>
+  --
+  *name : string
+}
+
+entity "Device" as e06 {
+  *id : number <<generated>>
+  --
+  *serial_number : text
+  *description : text
+  *type_id : number <<FK>>
+  *house_id : number <<FK>>
+  *module_id : number <<FK>>
+  *status : 'on' | 'off'
+}
+
+entity "TelemetryData" as e07 {
   *id : number <<generated>>
   --
   *device_id : number <<FK>>
-  *data text
+  *data : number
 }
 
-e01 ||..|{ e02
+e01 }|..|{ e02
 e02 ||..|{ e04
+e02 ||..|{ e06
 e04 ||..|| e03
-e04 ||..|{ e05
+e04 ||..|{ e06
+e06 ||..|| e05
+e06 ||..|{ e07
 @enduml

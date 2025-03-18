@@ -65,7 +65,7 @@
 
 **Диаграмма контейнеров (Containers)**
 
-[Диаграмма контейнеров](https://disk.yandex.ru/i/cqXfhbTvbGUVYw)
+[Диаграмма контейнеров](https://disk.yandex.ru/i/6227bXy8CbGXGg)
 
 **Диаграмма компонентов (Components)**
 
@@ -81,6 +81,6 @@
 
 # Задание 3. Разработка ER-диаграммы
 
-[ER-диаграмма](https://disk.yandex.ru/i/jr-1OMQLRxsXtg)
+[ER-диаграмма](https://disk.yandex.ru/i/OIlr2htBfUwn-g)
 
 # ❌ Задание 4. Создание и документирование API
