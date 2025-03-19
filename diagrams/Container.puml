@@ -1,0 +1,54 @@
+@startuml
+title WarmHouse Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "User", "A user of the warmhouse system")
+Person(admin, "Administrator", "An administrator managing the system")
+System(WarmHouseSystem, "WarmHouse System", "System managing warmhouses")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(MobileApp, "Mobile App", "Handles user interactions")
+  Container(WebApp, "Web App", "Handles user interactions")
+  Container(ApiGateway, "API Gateway", "Handles API requests")
+  Container(UserService, "User service", "Manages users")
+  Container(LoggingService, "Logging service", "Manages logs")
+  Container(DeviceService, "Device service", "Manages devices")
+  Container(ScenarioService, "Scenario service", "Manages user scenarios")
+  Container(DeviceDB, "Device database", "Stores devices")
+  Container(TelemetryDB, "Telemetry database", "Stores telemetry")
+  Container(UserDB, "User database", "Stores users")
+  Container(Kafka, "Kafka", "Message broker")
+  Container(LogDB, "Log database", "Stores logs")
+  Container(ScenarioDB, "Scenario database", "Stores user scenarios")
+}
+
+System_Ext(device, "Device")
+
+Rel(user, MobileApp, "Uses the system")
+Rel(user, WebApp, "Uses the system")
+Rel(admin, WebApp,"Manages the system")
+Rel(MobileApp, ApiGateway, "User requests")
+Rel(WebApp, ApiGateway, "User requests")
+Rel(ApiGateway, UserService, "Request data")
+Rel(ApiGateway, LoggingService, "Request data")
+Rel(ApiGateway, DeviceService, "Request data")
+Rel(ApiGateway, ScenarioService, "Request data")
+Rel(DeviceService, DeviceDB, "Reads/Writes user data")
+Rel(DeviceService, TelemetryDB, "Reads/Writes telemetry")
+Rel(UserService, UserDB, "Reads/Writes user data")
+Rel(Kafka, DeviceService, "Subscribe to device updates")
+Rel(DeviceService, Kafka, "Provide device data")
+Rel(Kafka, UserService, "Subscribe to user updates")
+Rel(UserService, Kafka, "Provide user data")
+Rel(DeviceService, device, "Control device")
+Rel(device, DeviceService, "Device data")
+Rel(Kafka, LoggingService, "Subscribe to log updates")
+Rel(LoggingService, Kafka, "Provide logs")
+Rel(LoggingService, LogDB, "Reads/Writes logs")
+Rel(ScenarioService, ScenarioDB, "Reads/Writes logs")
+Rel(Kafka, ScenarioService, "Subscribe to scenario updates")
+Rel(ScenarioService, Kafka, "Provide scenarios")
+@enduml

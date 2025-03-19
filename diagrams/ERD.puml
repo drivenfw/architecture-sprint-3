@@ -1,0 +1,80 @@
+@startuml
+
+entity "User" as e01 {
+  *id : number <<generated>>
+  --
+  *name : text
+  *email : text
+}
+
+entity "House" as e02 {
+  *id : number <<generated>>
+  --
+  *name : text
+  *description : text
+  *user_id : number <<FK>>
+}
+
+entity "ModuleType" as e03 {
+  *id : number <<generated>>
+  --
+  *name : string
+}
+
+entity "Module" as e04 {
+  *id : number <<generated>>
+  --
+  *description : text
+  *type_id : number <<FK>>
+  *house_id : number <<FK>>
+}
+
+entity "DeviceType" as e05 {
+  *id : number <<generated>>
+  --
+  *name : string
+}
+
+entity "Device" as e06 {
+  *id : number <<generated>>
+  --
+  *serial_number : text
+  *description : text
+  *type_id : number <<FK>>
+  *house_id : number <<FK>>
+  *module_id : number <<FK>>
+  *status : 'on' | 'off'
+}
+
+entity "TelemetryData" as e07 {
+  *id : number <<generated>>
+  --
+  *device_id : number <<FK>>
+  *data : number
+}
+
+entity "Scenario" as e08 {
+  *id : number <<generated>>
+  --
+  *house_id : number <<FK>>
+  *name : string
+  *description : text
+  *commands : text // [device_id, command1_id, command2_id, ...]
+}
+
+entity "Command" as e09 {
+  *id : number <<generated>>
+  --
+  *name : string
+}
+
+e01 }|..|{ e02
+e02 ||..|{ e04
+e02 ||..|{ e06
+e04 ||..|| e03
+e04 ||..|{ e06
+e06 ||..|| e05
+e06 ||..|{ e07
+e05 }|..|{ e09
+e02 ||..|{ e08
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+title WarmHouse Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class User {
+  +String id
+  +String name
+  +String email
+  +List<House> houses
+  +void register()
+  +void login()
+  +void addHouse()
+  +void removeHouse()
+}
+
+class House {
+  +String id
+  +String name
+  +String description
+  +List<Device> devices
+  +void addDevice()
+  +void removeDevice()
+}
+
+class Device {
+  +String id
+  +String description
+  +DeviceType type
+  +void turnOn()
+  +void turnOff()
+}
+
+User "1" -- "0..*" House : has
+House "1" -- "0..*" Device : has
+
+@enduml
