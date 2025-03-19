@@ -53,6 +53,21 @@ entity "TelemetryData" as e07 {
   *data : number
 }
 
+entity "Scenario" as e08 {
+  *id : number <<generated>>
+  --
+  *house_id : number <<FK>>
+  *name : string
+  *description : text
+  *commands : text // [device_id, command1_id, command2_id, ...]
+}
+
+entity "Command" as e09 {
+  *id : number <<generated>>
+  --
+  *name : string
+}
+
 e01 }|..|{ e02
 e02 ||..|{ e04
 e02 ||..|{ e06
@@ -60,4 +75,6 @@ e04 ||..|| e03
 e04 ||..|{ e06
 e06 ||..|| e05
 e06 ||..|{ e07
+e05 }|..|{ e09
+e02 ||..|{ e08
 @enduml
